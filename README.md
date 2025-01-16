@@ -1,19 +1,6 @@
-# Hono Open API Starter
+# Kelick API
 
-A starter template for building fully documented type-safe JSON APIs with Hono and Open API.
-
-> A new version of drizzle was released since the video showing this starter was made. See the [drizzle-v0.35 branch](https://github.com/w3cj/hono-open-api-starter/tree/drizzle-v0.35) and [this commit](https://github.com/w3cj/hono-open-api-starter/commit/92525ff84fb2a247c8245cc889b2320d7b3b6e2c) for the changes required to use drizzle v0.35
-
-> For a cloudflare specific template, see the [cloudflare branch](https://github.com/w3cj/hono-open-api-starter/tree/cloudflare) on this repo and the [cloudflare-drizzle-v0.35 branch](https://github.com/w3cj/hono-open-api-starter/tree/cloudflare-drizzle-v0.35)
-
-> For other deployment examples see the [hono-node-deployment-examples](https://github.com/w3cj/hono-node-deployment-examples) repo
-
-- [Hono Open API Starter](#hono-open-api-starter)
-  - [Included](#included)
-  - [Setup](#setup)
-  - [Code Tour](#code-tour)
-  - [Endpoints](#endpoints)
-  - [References](#references)
+CPF Contribution Calculator built with Hono and Open API with fully document type-safe JSON API.
 
 ## Included
 
@@ -28,84 +15,32 @@ A starter template for building fully documented type-safe JSON APIs with Hono a
 
 ## Setup
 
-Clone this template without git history
+1. Clone repository - `$ git clone https://github.com/klef-dev/kelick`
+2. Move to the directory - `$ cd kelick`
+3. Install dependencies `$ pnpm install`.
+4. Run `$ cp .env.example .env` then open the `.env` file and populate it with necessary values. This will help you to run the application successfully.
+5. Create postgres db / push schema `pnpm drizzle-kit push`
 
-```sh
-npx degit w3cj/hono-open-api-starter my-api
-cd my-api
-```
+### Running the server locally (Dev Mode)
 
-Create `.env` file
+Start up the server
 
-```sh
-cp .env.example .env
-```
-
-Install dependencies
-
-```sh
-pnpm install
-```
-
-Create sqlite db / push schema
-
-```sh
-pnpm drizzle-kit push
-```
-
-Run
-
-```sh
+```bash
 pnpm dev
+# or
+yarn dev
+# or
+bun run dev
+# or
+npm run dev
 ```
 
-Lint
+Application should start running on http://localhost:9999 by default.
 
-```sh
-pnpm lint
-```
+### To build for production
 
-Test
+First off you need to build the application using `$ pnpm build`. This will build it to the dist directory
 
-```sh
-pnpm test
-```
+And then run `$ pnpm start` to start the application in production mode.
 
-## Code Tour
-
-Base hono app exported from [app.ts](./src/app.ts). Local development uses [@hono/node-server](https://hono.dev/docs/getting-started/nodejs) defined in [index.ts](./src/index.ts) - update this file or create a new entry point to use your preferred runtime.
-
-Typesafe env defined in [env.ts](./src/env.ts) - add any other required environment variables here. The application will not start if any required environment variables are missing
-
-See [src/routes/tasks](./src/routes/tasks/) for an example Open API group. Copy this folder / use as an example for your route groups.
-
-- Router created in [tasks.index.ts](./src/routes/tasks/tasks.index.ts)
-- Route definitions defined in [tasks.routes.ts](./src/routes/tasks/tasks.routes.ts)
-- Hono request handlers defined in [tasks.handlers.ts](./src/routes/tasks/tasks.handlers.ts)
-- Group unit tests defined in [tasks.test.ts](./src/routes/tasks/tasks.test.ts)
-
-All app routes are grouped together and exported into single type as `AppType` in [app.ts](./src/app.ts) for use in [RPC / hono/client](https://hono.dev/docs/guides/rpc).
-
-## Endpoints
-
-| Path               | Description              |
-| ------------------ | ------------------------ |
-| GET /doc           | Open API Specification   |
-| GET /reference     | Scalar API Documentation |
-| GET /tasks         | List all tasks           |
-| POST /tasks        | Create a task            |
-| GET /tasks/{id}    | Get one task by id       |
-| PATCH /tasks/{id}  | Patch one task by id     |
-| DELETE /tasks/{id} | Delete one task by id    |
-
-## References
-
-- [What is Open API?](https://swagger.io/docs/specification/v3_0/about/)
-- [Hono](https://hono.dev/)
-  - [Zod OpenAPI Example](https://hono.dev/examples/zod-openapi)
-  - [Testing](https://hono.dev/docs/guides/testing)
-  - [Testing Helper](https://hono.dev/docs/helpers/testing)
-- [@hono/zod-openapi](https://github.com/honojs/middleware/tree/main/packages/zod-openapi)
-- [Scalar Documentation](https://github.com/scalar/scalar/tree/main/?tab=readme-ov-file#documentation)
-  - [Themes / Layout](https://github.com/scalar/scalar/blob/main/documentation/themes.md)
-  - [Configuration](https://github.com/scalar/scalar/blob/main/documentation/configuration.md)
+Happy hacking 👨🏽‍💻.
