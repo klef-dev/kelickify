@@ -7,7 +7,7 @@ import db from "@/db";
 import { cpfContributions, employees } from "@/db/schema";
 import { cpfService } from "@/services/cpf.service";
 
-import type { CalculateRoute } from "./cpf.routes";
+import type { CalculateRoute, HistoryRoute } from "./cpf.routes";
 
 export const calculate: AppRouteHandler<CalculateRoute> = async (c) => {
   const { employeeId, month } = c.req.valid("json");
@@ -45,4 +45,15 @@ export const calculate: AppRouteHandler<CalculateRoute> = async (c) => {
     .returning();
 
   return c.json({ id: contribution.id, month, ...calculation }, HttpStatusCodes.OK);
+};
+
+export const history: AppRouteHandler<HistoryRoute> = async (c) => {
+  const { employeeId } = c.req.valid("param");
+
+  const contributions = await db.query.cpfContributions.findMany({
+    where: eq(cpfContributions.employeeId, employeeId),
+    orderBy: (cpfContributions, { desc }) => [desc(cpfContributions.month)],
+  });
+
+  return c.json(contributions, HttpStatusCodes.OK);
 };

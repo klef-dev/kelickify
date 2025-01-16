@@ -1,4 +1,7 @@
+import { createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
+
+import { cpfContributions } from "@/db/schema";
 
 export const cpfCalculationSchema = z.object({
   employeeId: z.string().uuid(),
@@ -28,3 +31,5 @@ export const cpfCalculationResultSchema = z.object({
     .regex(/^\d{4}-(?:0[1-9]|1[0-2])$/, "Invalid month format (YYYY-MM)")
     .optional(),
 });
+
+export const selectCPFContributionsSchema = createSelectSchema(cpfContributions);

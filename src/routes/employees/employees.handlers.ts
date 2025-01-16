@@ -32,7 +32,12 @@ export const getAll: AppRouteHandler<GetAllRoute> = async (c) => {
 export const getOne: AppRouteHandler<GetOneRoute> = async (c) => {
   const { id } = c.req.valid("param");
 
-  const employee = await db.query.employees.findFirst({ where: eq(employees.id, id) });
+  const employee = await db.query.employees.findFirst({
+    where: eq(employees.id, id),
+    with: {
+      contributions: true,
+    },
+  });
 
   if (!employee) return c.json({ message: "Employee not found" }, HttpStatusCodes.NOT_FOUND);
 
