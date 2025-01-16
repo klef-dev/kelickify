@@ -43,5 +43,22 @@ export const history = createRoute({
   },
 });
 
+export const batchCalculate = createRoute({
+  path: "/cpf/batch-calculate",
+  method: "post",
+  request: {
+    body: jsonContentRequired(cpfCalculationSchema.pick({ month: true }), "The employees to calculate CPF for"),
+  },
+  tags,
+  responses: {
+    [HttpStatusCodes.OK]: jsonContent(z.object({ message: z.string() }), "The calculated CPF for each employee"),
+    [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
+      createErrorSchema(z.array(cpfCalculationSchema)),
+      "The validation error(s)",
+    ),
+  },
+});
+
 export type CalculateRoute = typeof calculate;
 export type HistoryRoute = typeof history;
+export type BatchCalculateRoute = typeof batchCalculate;

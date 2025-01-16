@@ -15,6 +15,7 @@ const EnvSchema = z.object({
   PORT: z.coerce.number().default(9999),
   LOG_LEVEL: z.enum(["fatal", "error", "warn", "info", "debug", "trace", "silent"]),
   DATABASE_URL: z.string().url(),
+  REDIS_URL: z.string().url().default("redis://localhost:6379"),
 });
 
 export type env = z.infer<typeof EnvSchema>;

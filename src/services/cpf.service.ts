@@ -2,6 +2,8 @@ import { differenceInYears } from "date-fns";
 
 import type { CPFCalculationResult, Employee } from "@/lib/types";
 
+import db from "@/db";
+import { cpfContributions } from "@/db/schema";
 import { ACCOUNT_ALLOCATION, CPF_AGE_GROUPS, PR_FACTORS, WAGE_LIMITS } from "@/lib/cpf";
 
 export class CPFService {
@@ -56,6 +58,24 @@ export class CPFService {
         net: Number(basicSalary) + Number(allowances) - employeeContribution,
       },
     };
+  }
+
+  async saveCalculation(calculation: CPFCalculationResult, employeeId: string, month: string) {
+    const [contribution] = await db
+      .insert(cpfContributions)
+      .values({
+        employeeId,
+        month,
+        employeeContribution: String(calculation.contribution.employee),
+        employerContribution: String(calculation.contribution.employer),
+        totalContribution: String(calculation.contribution.total),
+        ordinaryAccount: String(calculation.allocation.ordinary),
+        specialAccount: String(calculation.allocation.special),
+        medisaveAccount: String(calculation.allocation.medisave),
+      })
+      .returning();
+
+    return { id: contribution.id, month, ...calculation };
   }
 }
 

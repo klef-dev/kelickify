@@ -5,9 +5,10 @@ import type { AppRouteHandler } from "@/lib/types";
 
 import db from "@/db";
 import { cpfContributions, employees } from "@/db/schema";
+import { cpfQueue } from "@/queues/cpf.queue";
 import { cpfService } from "@/services/cpf.service";
 
-import type { CalculateRoute, HistoryRoute } from "./cpf.routes";
+import type { BatchCalculateRoute, CalculateRoute, HistoryRoute } from "./cpf.routes";
 
 export const calculate: AppRouteHandler<CalculateRoute> = async (c) => {
   const { employeeId, month } = c.req.valid("json");
@@ -30,21 +31,9 @@ export const calculate: AppRouteHandler<CalculateRoute> = async (c) => {
   const calculation = cpfService.calculateContribution(employee);
 
   // Save calculation
-  const [contribution] = await db
-    .insert(cpfContributions)
-    .values({
-      employeeId,
-      month,
-      employeeContribution: String(calculation.contribution.employee),
-      employerContribution: String(calculation.contribution.employer),
-      totalContribution: String(calculation.contribution.total),
-      ordinaryAccount: String(calculation.allocation.ordinary),
-      specialAccount: String(calculation.allocation.special),
-      medisaveAccount: String(calculation.allocation.medisave),
-    })
-    .returning();
+  const contribution = await cpfService.saveCalculation(calculation, employeeId, month);
 
-  return c.json({ id: contribution.id, month, ...calculation }, HttpStatusCodes.OK);
+  return c.json(contribution, HttpStatusCodes.OK);
 };
 
 export const history: AppRouteHandler<HistoryRoute> = async (c) => {
@@ -56,4 +45,18 @@ export const history: AppRouteHandler<HistoryRoute> = async (c) => {
   });
 
   return c.json(contributions, HttpStatusCodes.OK);
+};
+
+export const batchCalculate: AppRouteHandler<BatchCalculateRoute> = async (c) => {
+  const { month } = c.req.valid("json");
+
+  // Get all active employees
+  const activeEmployees = await db.query.employees.findMany({
+    where: eq(employees.status, "Active"),
+  });
+
+  // Calculate CPF for each employee
+  activeEmployees.map(async (employee) => await cpfQueue.add({ employee, month }));
+
+  return c.json({ message: `Queued ${activeEmployees.length} employees for CPF calculation` }, HttpStatusCodes.OK);
 };
