@@ -21,7 +21,7 @@ export const create = createRoute({
       createErrorSchema(createEmployeeSchema),
       "The validation error(s)",
     ),
-    [HttpStatusCodes.CONFLICT]: jsonContent(z.object({ message: z.string() }), "Duplicate NRIC error"),
+    [HttpStatusCodes.BAD_REQUEST]: jsonContent(z.object({ message: z.string() }), "Duplicate NRIC error"),
   },
 });
 
