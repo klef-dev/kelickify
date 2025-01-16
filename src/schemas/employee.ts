@@ -22,8 +22,3 @@ export const createEmployeeSchema = createInsertSchema(employees, {
   createdAt: true,
   updatedAt: true,
 });
-
-export const cpfCalculationSchema = z.object({
-  employeeId: z.number(),
-  month: z.string().regex(/^\d{4}-(?:0[1-9]|1[0-2])$/, "Invalid month format (YYYY-MM)"),
-});

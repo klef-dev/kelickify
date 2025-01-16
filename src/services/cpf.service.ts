@@ -1,6 +1,6 @@
 import { differenceInYears } from "date-fns";
 
-import type { Employee } from "@/lib/types";
+import type { CPFCalculationResult, Employee } from "@/lib/types";
 
 import { ACCOUNT_ALLOCATION, CPF_AGE_GROUPS, PR_FACTORS, WAGE_LIMITS } from "@/lib/cpf";
 
@@ -23,7 +23,7 @@ export class CPFService {
     };
   }
 
-  calculateContribution(employee: Employee) {
+  calculateContribution(employee: Employee): CPFCalculationResult {
     const { dateOfBirth, residencyStatus, basicSalary, allowances = 0 } = employee;
 
     if (Number(basicSalary) < WAGE_LIMITS.MINIMUM_WAGE) {
@@ -51,7 +51,7 @@ export class CPFService {
       },
       salary: {
         basic: Number(basicSalary),
-        allowances,
+        allowances: Number(allowances),
         total: Number(basicSalary) + Number(allowances),
         net: Number(basicSalary) + Number(allowances) - employeeContribution,
       },
