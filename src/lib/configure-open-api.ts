@@ -9,19 +9,15 @@ export default function configureOpenAPI(app: AppOpenAPI) {
     openapi: "3.0.0",
     info: {
       version: packageJSON.version,
-      title: "Tasks API",
+      title: "Kelick API",
     },
   });
 
   app.get(
     "/reference",
     apiReference({
-      theme: "kepler",
-      layout: "classic",
-      defaultHttpClient: {
-        targetKey: "javascript",
-        clientKey: "fetch",
-      },
+      theme: "elysiajs",
+      layout: "modern",
       spec: {
         url: "/doc",
       },
