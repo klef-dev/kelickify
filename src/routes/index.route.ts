@@ -11,16 +11,11 @@ const router = createRouter().openapi(
     method: "get",
     path: "/",
     responses: {
-      [HttpStatusCodes.OK]: jsonContent(createMessageObjectSchema("Tasks API"), "Tasks API Index"),
+      [HttpStatusCodes.OK]: jsonContent(createMessageObjectSchema("Welcome to Kelick API 🚀"), "Kelick API"),
     },
   }),
   (c) => {
-    return c.json(
-      {
-        message: "Tasks API",
-      },
-      HttpStatusCodes.OK,
-    );
+    return c.json({ message: "Welcome to Kelick API 🚀" }, HttpStatusCodes.OK);
   },
 );
 
