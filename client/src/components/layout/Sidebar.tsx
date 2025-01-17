@@ -2,25 +2,25 @@ import { useState } from "react";
 import {
   Building2,
   ChevronDown,
-  Home,
   LayoutDashboard,
   Users,
   Wallet,
   CalendarDays,
   FileSpreadsheet,
   MoreHorizontal,
-  Bell,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/" },
   {
-    icon: Building2,
-    label: "Organization",
+    icon: null,
+    label: "ORGANIZATION",
     href: "#",
     hasSubmenu: true,
-    submenuItems: [{ label: "Kelick", href: "#" }],
+
+    submenuItems: [{ label: "Kelick", href: "#", icon: Building2 }],
   },
   {
     icon: null,
@@ -40,24 +40,27 @@ export function Sidebar() {
   return (
     <div className="w-64 h-screen bg-white border-r flex flex-col">
       <div className="p-4">
-        <img src="/lovable-uploads/8ad3565a-eff5-4b8a-87d4-afd8fee23cd5.png" alt="Kelick" className="h-8" />
+        <Image
+          src={"/kelick-logo.svg"}
+          alt="Kelick"
+          height={20}
+          objectFit="contain"
+          width={100}
+          className="object-contain"
+        />
       </div>
-      
+
       <nav className="flex-1 px-2">
         {menuItems.map((item, idx) => (
           <div key={idx}>
             {item.isHeader ? (
-              <div className="px-4 py-2 text-xs font-semibold text-gray-500 mt-4">
-                {item.label}
-              </div>
+              <div className="px-4 py-2 text-xs font-semibold text-gray-500 mt-4">{item.label}</div>
             ) : (
               <a
                 href={item.href}
                 className={cn(
                   "flex items-center px-4 py-2 mt-1 text-sm font-medium rounded-md",
-                  item.active
-                    ? "bg-gray-100 text-gray-900"
-                    : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                  item.active ? "bg-gray-100 text-gray-900" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900",
                 )}
                 onClick={() => {
                   if (item.hasSubmenu) {
@@ -66,27 +69,27 @@ export function Sidebar() {
                 }}
               >
                 {item.icon && <item.icon className="h-5 w-5 mr-3" />}
-                <span>{item.label}</span>
+                <span className={item.hasSubmenu ? "font-semibold text-gray-500" : ""}>{item.label}</span>
                 {item.hasSubmenu && (
                   <ChevronDown
                     className={cn(
                       "ml-auto h-4 w-4 transition-transform",
-                      expanded === item.label ? "transform rotate-180" : ""
+                      expanded === item.label ? "transform rotate-180" : "",
                     )}
                   />
                 )}
               </a>
             )}
             {item.hasSubmenu && expanded === item.label && (
-              <div className="ml-8 mt-1">
+              <div className="ml-4 mt-1">
                 {item.submenuItems?.map((subItem, subIdx) => (
-                  <a
-                    key={subIdx}
-                    href={subItem.href}
+                  <div
                     className="flex items-center px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-md"
+                    key={subIdx}
                   >
-                    {subItem.label}
-                  </a>
+                    {subItem.icon && <subItem.icon className="h-5 w-5 mr-3" />}
+                    <span className="">{subItem.label}</span>
+                  </div>
                 ))}
               </div>
             )}
