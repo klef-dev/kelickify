@@ -38,7 +38,7 @@ const Index = () => {
             </Button>
           </div>
         </header>
-        <div className="container flex-grow">
+        <div className="container flex-grow space-y-5">
           {status === "loading" && (
             <div className="flex items-center justify-center h-full">
               <DotLottieReact
