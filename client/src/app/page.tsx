@@ -11,14 +11,19 @@ import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 const Index = () => {
   const [uploadModalOpen, setUploadModalOpen] = useState(false);
-  const [status, setStatus] = React.useState<"idle" | "loading" | "done">("loading");
+  const [status, setStatus] = React.useState<"idle" | "loading" | "done">("idle");
 
   const update = () => {
     setStatus("loading");
-    setTimeout(() => {
-      setStatus("done");
-    }, 2000);
   };
+
+  React.useEffect(() => {
+    if (status === "loading") {
+      setTimeout(() => {
+        setStatus("done");
+      }, 5000);
+    }
+  }, [status]);
 
   return (
     <div className="flex h-screen bg-gray-50">
@@ -40,7 +45,7 @@ const Index = () => {
                 src="https://lottie.host/880c8f3e-3541-4c31-9699-629992fd9454/PAEO9KIjQn.lottie"
                 loop
                 autoplay
-                className="scale-[.2]"
+                className="scale-[.90]"
               />
             </div>
           )}
