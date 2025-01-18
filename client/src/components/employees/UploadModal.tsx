@@ -4,6 +4,8 @@ import { ArrowDownToLineIcon } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
 import { toast } from "sonner";
+import { cn } from "@/lib/utils";
+import { Progress } from "../ui/progress";
 
 interface UploadModalProps {
   open: boolean;
@@ -14,6 +16,8 @@ interface UploadModalProps {
 export function UploadModal({ open, onClose, handleUpload }: UploadModalProps) {
   const [dragActive, setDragActive] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
+  const [isUploading, setIsUploading] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault();
@@ -51,9 +55,21 @@ export function UploadModal({ open, onClose, handleUpload }: UploadModalProps) {
     }
 
     //TODO: Handle the valid files here
+    setIsUploading(true);
 
-    toast("Files uploaded", { description: `Successfully uploaded ${validFiles.length} file(s)` });
-    setFiles(validFiles);
+    setTimeout(() => {
+      let currentProgress = 0;
+      const interval = setInterval(() => {
+        currentProgress += 2;
+        if (currentProgress <= 100) {
+          setProgress(currentProgress);
+        } else {
+          clearInterval(interval);
+          setFiles(validFiles);
+          toast("Files uploaded", { description: `Successfully uploaded ${validFiles.length} file(s)` });
+        }
+      }, 50);
+    }, 2000);
   };
 
   return (
@@ -64,24 +80,75 @@ export function UploadModal({ open, onClose, handleUpload }: UploadModalProps) {
         </DialogHeader>
 
         <div
-          className={`mt-4 border-2 border-dashed rounded-lg p-8 text-center bg-gray-100 ${
-            dragActive ? "border-primary bg-primary/5" : "border-gray-300"
-          }`}
+          className={cn("mt-4 border-2 border-dashed rounded-lg p-8 text-center bg-gray-100 border-gray-300", {
+            "border-primary bg-primary/5": dragActive,
+          })}
           onDragEnter={handleDrag}
           onDragLeave={handleDrag}
           onDragOver={handleDrag}
           onDrop={handleDrop}
         >
-          <Image alt="Upload" height={80} width={80} objectFit="contain" src={"/upload-icon.png"} className="mx-auto" />
-          <p className="mt-2 text-sm text-gray-600">
-            Drag and drop your files here or
-            <br />{" "}
-            <label className="font-semibold cursor-pointer">
-              click to upload
-              <input type="file" className="hidden" accept=".xls,.xlsx,.csv" onChange={handleFileInput} />
-            </label>
-          </p>
+          {!progress && (
+            <>
+              <div
+                className={cn(
+                  "mx-auto w-20 h-20 flex items-center justify-center transition-all duration-1000 opacity-100",
+                  { "opacity-0 transform -translate-y-6": isUploading },
+                )}
+              >
+                <Image
+                  alt="Upload"
+                  height={80}
+                  width={80}
+                  objectFit="contain"
+                  src={"/upload-icon.png"}
+                  className="mx-auto"
+                />
+              </div>
+
+              <p
+                className={cn("mt-2 text-sm text-gray-600 transition-all duration-1000 delay-500 opacity-100", {
+                  "opacity-0 transform -translate-y-6": isUploading,
+                })}
+              >
+                Drag and drop your files here
+              </p>
+
+              <p
+                className={cn("mt-1 text-sm text-gray-600 transition-all duration-1000 delay-1000 opacity-100", {
+                  "opacity-0 transform -translate-y-6": isUploading,
+                })}
+              >
+                or{" "}
+                <label className="font-semibold cursor-pointer">
+                  click to upload
+                  <input type="file" className="hidden" accept=".xls,.xlsx,.csv" onChange={handleFileInput} />
+                </label>
+              </p>
+            </>
+          )}
+
+          {progress > 0 && (
+            <div className="mt-10 mb-10">
+              <div className="w-1/2 mx-auto">
+                <Progress value={progress} className="rounded-sm" />
+              </div>
+              <p className="mt-4 text-sm text-gray-600 text-center">Please wait while we upload your file...</p>
+            </div>
+          )}
         </div>
+
+        <style jsx global>{`
+          .upload-section {
+            transition: all 1s ease-in-out;
+          }
+
+          .upload-section.fade-out {
+            opacity: 0;
+            transform: translateY(-1rem);
+          }
+        `}</style>
+
         <div className="flex items-center justify-between">
           <p className="text-xs text-gray-500 font-semibold">Supported formats: XLS, CSV</p>
           <p className="text-xs text-gray-500 font-semibold">Maximum file size: 25MB</p>

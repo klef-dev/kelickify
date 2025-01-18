@@ -31,7 +31,7 @@ const Index = () => {
           position: "bottom-center",
           icon: <KelickCircleCheckIcon />,
         });
-      }, 5000);
+      }, 2000);
     }
   }, [status]);
 
@@ -44,15 +44,7 @@ const Index = () => {
           <div className="container flex items-center justify-between py-5">
             <h1 className="text-2xl font-semibold">Employees</h1>
             {true && (
-              <Button
-                onClick={() =>
-                  toast("Employees successfully added", {
-                    className: "rounded-xl space-x-2",
-                    position: "bottom-center",
-                    icon: <KelickCircleCheckIcon />,
-                  })
-                }
-              >
+              <Button onClick={() => setUploadModalOpen(true)}>
                 <KelickAddUserIcon className="scale-125" />
                 Add Employee
               </Button>
