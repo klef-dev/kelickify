@@ -7,6 +7,8 @@ import { UploadModal } from "@/components/employees/UploadModal";
 import EmptyState from "@/components/employees/EmptyState";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import Confetti from "react-confetti";
+import { Button } from "@/components/ui/button";
+import { KelickAddUserIcon } from "@/components/icons";
 
 const Index = () => {
   const [uploadModalOpen, setUploadModalOpen] = useState(false);
@@ -29,9 +31,15 @@ const Index = () => {
       <Sidebar />
 
       <main className="flex-1 overflow-auto space-y-5 h-screen flex flex-col">
-        <header className=" bg-white ">
+        <header className="sticky top-0 z-10 bg-white">
           <div className="container flex items-center justify-between py-5">
             <h1 className="text-2xl font-semibold">Employees</h1>
+            {status === "done" && (
+              <Button onClick={() => setUploadModalOpen(true)}>
+                <KelickAddUserIcon className="scale-125" />
+                Add Employee
+              </Button>
+            )}
           </div>
         </header>
         <div className="container flex-grow space-y-5">

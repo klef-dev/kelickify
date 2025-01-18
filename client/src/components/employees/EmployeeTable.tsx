@@ -2,6 +2,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Download, Search } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const employees = [
   {
@@ -18,7 +19,27 @@ const employees = [
     role: "Lead Designer",
     status: "Active",
   },
-  // Add more sample data as needed
+  {
+    id: "HJKL1234",
+    profile: "profile 3",
+    email: "example3@asure.pro",
+    role: "Software Engineer",
+    status: "Payroll Only",
+  },
+  {
+    id: "LMNO5678",
+    profile: "profile 4",
+    email: "example4@asure.pro",
+    role: "Product Manager",
+    status: "Payroll Only",
+  },
+  {
+    id: "PQRS9101",
+    profile: "profile 5",
+    email: "example5@asure.pro",
+    role: "HR Specialist",
+    status: "Invite Sent",
+  },
 ];
 
 export function EmployeeTable() {
@@ -35,10 +56,7 @@ export function EmployeeTable() {
         <div className="flex items-center gap-4">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-            <Input
-              placeholder="Search employee"
-              className="pl-10"
-            />
+            <Input placeholder="Search employee" className="pl-10" />
           </div>
           <Button variant="outline">All Status</Button>
           <Button variant="outline">All Role</Button>
@@ -59,24 +77,40 @@ export function EmployeeTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {employees.map((employee) => (
-            <TableRow key={employee.id}>
-              <TableCell>
-                <input type="checkbox" className="rounded border-gray-300" />
-              </TableCell>
-              <TableCell className="font-medium text-primary">{employee.id}</TableCell>
-              <TableCell>{employee.profile}</TableCell>
-              <TableCell>{employee.email}</TableCell>
-              <TableCell>{employee.role}</TableCell>
-              <TableCell>
-                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                  employee.status === "Active" ? "bg-primary/10 text-primary" : "bg-gray-100 text-gray-800"
-                }`}>
-                  {employee.status}
-                </span>
-              </TableCell>
-            </TableRow>
-          ))}
+          {[...employees, ...employees]
+            .sort(() => Math.random() - 0.5)
+            .map((employee, i) => (
+              <TableRow key={i} className="font-semibold">
+                <TableCell>
+                  <input type="checkbox" className="rounded border-gray-300" />
+                </TableCell>
+                <TableCell className="text-primary underline">{employee.id}</TableCell>
+                <TableCell className="flex items-center gap-2">
+                  <div className="w-8 h-8 bg-gray-100 rounded-full"></div>
+                  {employee.profile}
+                </TableCell>
+                <TableCell>{employee.email}</TableCell>
+                <TableCell>{employee.role}</TableCell>
+                <TableCell>
+                  <span
+                    className={cn("inline-flex items-center px-2.5 py-0.5 rounded-full", {
+                      "bg-primary/10 text-primary": employee.status === "Active",
+                      "bg-gray-100 text-gray-500": employee.status === "Payroll Only",
+                      "bg-purple-100 text-purple-500": employee.status === "Invite Sent",
+                    })}
+                  >
+                    <div
+                      className={cn("w-2 h-2 rounded-full mr-2", {
+                        "bg-primary": employee.status === "Active",
+                        "bg-gray-500": employee.status === "Payroll Only",
+                        "bg-purple-500": employee.status === "Invite Sent",
+                      })}
+                    ></div>
+                    {employee.status}
+                  </span>
+                </TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
     </div>
