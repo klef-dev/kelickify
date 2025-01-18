@@ -1,11 +1,9 @@
 "use client";
 import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { EmployeeStats } from "@/components/employees/EmployeeStats";
 import { EmployeeTable } from "@/components/employees/EmployeeTable";
 import { UploadModal } from "@/components/employees/UploadModal";
-import { UserPlus } from "lucide-react";
 import EmptyState from "@/components/employees/EmptyState";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import Confetti from "react-confetti";
@@ -34,11 +32,6 @@ const Index = () => {
         <header className=" bg-white ">
           <div className="container flex items-center justify-between py-5">
             <h1 className="text-2xl font-semibold">Employees</h1>
-
-            <Button onClick={() => setUploadModalOpen(true)}>
-              <UserPlus className="h-4 w-4 mr-2" />
-              Add Employee
-            </Button>
           </div>
         </header>
         <div className="container flex-grow space-y-5">
@@ -48,7 +41,7 @@ const Index = () => {
                 src="https://lottie.host/880c8f3e-3541-4c31-9699-629992fd9454/PAEO9KIjQn.lottie"
                 loop
                 autoplay
-                style={{ width: 150, height: 150 }}
+                style={{ width: 100, height: 100 }}
               />
             </div>
           )}
