@@ -5,7 +5,7 @@ import { Sidebar } from "@/components/layout/Sidebar";
 import { EmployeeStats } from "@/components/employees/EmployeeStats";
 import { EmployeeTable } from "@/components/employees/EmployeeTable";
 import { UploadModal } from "@/components/employees/UploadModal";
-import { UserPlus, Upload } from "lucide-react";
+import { UserPlus } from "lucide-react";
 
 const Index = () => {
   const [uploadModalOpen, setUploadModalOpen] = useState(false);
@@ -19,11 +19,7 @@ const Index = () => {
           <div className="flex justify-between items-center mb-8">
             <h1 className="text-2xl font-semibold">Employees</h1>
             <div className="flex gap-3">
-              <Button variant="outline" onClick={() => setUploadModalOpen(true)}>
-                <Upload className="h-4 w-4 mr-2" />
-                Bulk Upload
-              </Button>
-              <Button>
+              <Button onClick={() => setUploadModalOpen(true)}>
                 <UserPlus className="h-4 w-4 mr-2" />
                 Add Employee
               </Button>
