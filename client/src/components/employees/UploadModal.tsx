@@ -87,8 +87,8 @@ export function UploadModal({ open, onClose }: UploadModalProps) {
           </p>
         </div>
         <div className="flex items-center justify-between">
-          <p className="mt-1 text-xs text-gray-500">Supported formats: XLS, CSV</p>
-          <p className="mt-1 text-xs text-gray-500">Maximum file size: 25MB</p>
+          <p className="text-xs text-gray-500">Supported formats: XLS, CSV</p>
+          <p className="text-xs text-gray-500">Maximum file size: 25MB</p>
         </div>
 
         <div className="mt-4 bg-gray-50 rounded-lg p-4">
