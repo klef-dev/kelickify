@@ -13,11 +13,11 @@ const EmptyState = ({ handleUpload }: { handleUpload: () => void }) => {
         <h4 className="font-bold text-3xl">Start building your team</h4>
         <p className="text-gray-700 text-base">Add your first team member or import your entire team.</p>
         <div className="p-4 flex items-center justify-center space-x-2">
-          <Button variant="outline" onClick={() => setUploadModalOpen(true)} className="text-base">
+          <Button variant="outline" onClick={() => setUploadModalOpen(true)} className="text-base font-semibold">
             <KelickBulkUploadIcon className="scale-150 mr-2" />
             Bulk Upload
           </Button>
-          <Button type="submit" className="text-base">
+          <Button type="submit" className="text-base font-semibold">
             <KelickAddUserIcon className="scale-150 mr-2" />
             Add Employee
           </Button>

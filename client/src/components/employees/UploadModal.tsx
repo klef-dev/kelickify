@@ -1,9 +1,8 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { DownloadIcon } from "lucide-react";
+import { ArrowDownToLineIcon } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { toast } from "sonner";
 import Image from "next/image";
 
 interface UploadModalProps {
@@ -14,6 +13,7 @@ interface UploadModalProps {
 
 export function UploadModal({ open, onClose, handleUpload }: UploadModalProps) {
   const [dragActive, setDragActive] = useState(false);
+  const [files, setFiles] = useState<File[]>([]);
   const { toast } = useToast();
 
   const handleDrag = (e: React.DragEvent) => {
@@ -41,28 +41,27 @@ export function UploadModal({ open, onClose, handleUpload }: UploadModalProps) {
   };
 
   const handleFiles = (files: File[]) => {
-    // const validFiles = files.filter(
-    //   (file) =>
-    //     file.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" || file.type === "text/csv",
-    // );
+    const validFiles = files.filter(
+      (file) =>
+        file.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" || file.type === "text/csv",
+    );
 
-    // if (validFiles.length === 0) {
-    //   toast({
-    //     title: "Invalid file type",
-    //     description: "Please upload only XLS or CSV files",
-    //     variant: "destructive",
-    //   });
-    //   return;
-    // }
+    if (validFiles.length === 0) {
+      toast({
+        title: "Invalid file type",
+        description: "Please upload only XLS or CSV files",
+        variant: "destructive",
+      });
+      return;
+    }
 
-    // Handle the valid files here
+    //TODO: Handle the valid files here
 
     toast({
       title: "Files uploaded",
-      // description: `Successfully uploaded ${validFiles.length} file(s)`,
+      description: `Successfully uploaded ${validFiles.length} file(s)`,
     });
-    handleUpload?.();
-    onClose();
+    setFiles(validFiles);
   };
 
   return (
@@ -85,18 +84,18 @@ export function UploadModal({ open, onClose, handleUpload }: UploadModalProps) {
           <p className="mt-2 text-sm text-gray-600">
             Drag and drop your files here or
             <br />{" "}
-            <label className="text-primary hover:underline cursor-pointer">
+            <label className="font-semibold cursor-pointer">
               click to upload
               <input type="file" className="hidden" accept=".xls,.xlsx,.csv" onChange={handleFileInput} />
             </label>
           </p>
         </div>
         <div className="flex items-center justify-between">
-          <p className="text-xs text-gray-500">Supported formats: XLS, CSV</p>
-          <p className="text-xs text-gray-500">Maximum file size: 25MB</p>
+          <p className="text-xs text-gray-500 font-semibold">Supported formats: XLS, CSV</p>
+          <p className="text-xs text-gray-500 font-semibold">Maximum file size: 25MB</p>
         </div>
 
-        <div className="mt-4 bg-gray-100 rounded-lg p-4">
+        <div className="mt-4 bg-primary/5 rounded-lg p-4">
           <div className="flex items-center space-x-4">
             <Image alt="Upload" height={50} width={50} objectFit="contain" src={"/excel-logo.png"} />
             <div className="flex-1 w-4/5">
@@ -105,8 +104,8 @@ export function UploadModal({ open, onClose, handleUpload }: UploadModalProps) {
                 You can download the attached example and use them as a starting point for your own file.
               </p>
             </div>
-            <Button variant="outline" size="sm">
-              <DownloadIcon />
+            <Button variant="outline" size="sm" className="rounded-xl">
+              <ArrowDownToLineIcon />
               Download XLSX
             </Button>
           </div>
@@ -116,7 +115,18 @@ export function UploadModal({ open, onClose, handleUpload }: UploadModalProps) {
           <Button variant="outline" onClick={onClose}>
             Cancel
           </Button>
-          <Button type="submit">Continue</Button>
+          <Button
+            type="submit"
+            onClick={() => {
+              if (files.length) {
+                handleUpload?.();
+                onClose();
+              }
+            }}
+            disabled={!files.length}
+          >
+            Continue
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
