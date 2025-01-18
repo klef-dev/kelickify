@@ -8,8 +8,9 @@ import EmptyState from "@/components/employees/EmptyState";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import Confetti from "react-confetti";
 import { Button } from "@/components/ui/button";
-import { KelickAddUserIcon } from "@/components/icons";
+import { KelickAddUserIcon, KelickCircleCheckIcon } from "@/components/icons";
 import SuccessDialog from "@/components/employees/SuccessDialog";
+import { toast } from "sonner";
 
 const Index = () => {
   const [uploadModalOpen, setUploadModalOpen] = useState(false);
@@ -25,6 +26,11 @@ const Index = () => {
       setTimeout(() => {
         setStatus("done");
         setIsDialogOpen(true);
+        toast("Employees successfully added", {
+          className: "rounded-xl space-x-2",
+          position: "bottom-center",
+          icon: <KelickCircleCheckIcon />,
+        });
       }, 5000);
     }
   }, [status]);
@@ -37,8 +43,16 @@ const Index = () => {
         <header className="sticky top-0 z-10 bg-white">
           <div className="container flex items-center justify-between py-5">
             <h1 className="text-2xl font-semibold">Employees</h1>
-            {status === "done" && (
-              <Button onClick={() => setUploadModalOpen(true)}>
+            {true && (
+              <Button
+                onClick={() =>
+                  toast("Employees successfully added", {
+                    className: "rounded-xl space-x-2",
+                    position: "bottom-center",
+                    icon: <KelickCircleCheckIcon />,
+                  })
+                }
+              >
                 <KelickAddUserIcon className="scale-125" />
                 Add Employee
               </Button>
@@ -61,7 +75,7 @@ const Index = () => {
             <>
               <EmployeeStats />
               <EmployeeTable />
-              {isDialogOpen && <Confetti />}
+              {isDialogOpen && <Confetti style={{ zIndex: 1000 }} />}
               <SuccessDialog isDialogOpen={isDialogOpen} setIsDialogOpen={() => setIsDialogOpen(false)} />
             </>
           )}

@@ -2,8 +2,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { Button } from "@/components/ui/button";
 import { ArrowDownToLineIcon } from "lucide-react";
 import { useState } from "react";
-import { useToast } from "@/hooks/use-toast";
 import Image from "next/image";
+import { toast } from "sonner";
 
 interface UploadModalProps {
   open: boolean;
@@ -14,7 +14,6 @@ interface UploadModalProps {
 export function UploadModal({ open, onClose, handleUpload }: UploadModalProps) {
   const [dragActive, setDragActive] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
-  const { toast } = useToast();
 
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault();
@@ -47,20 +46,13 @@ export function UploadModal({ open, onClose, handleUpload }: UploadModalProps) {
     );
 
     if (validFiles.length === 0) {
-      toast({
-        title: "Invalid file type",
-        description: "Please upload only XLS or CSV files",
-        variant: "destructive",
-      });
+      toast.error("Invalid file type", { description: "Please upload only XLS or CSV files" });
       return;
     }
 
     //TODO: Handle the valid files here
 
-    toast({
-      title: "Files uploaded",
-      description: `Successfully uploaded ${validFiles.length} file(s)`,
-    });
+    toast("Files uploaded", { description: `Successfully uploaded ${validFiles.length} file(s)` });
     setFiles(validFiles);
   };
 

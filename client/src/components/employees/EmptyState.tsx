@@ -9,7 +9,7 @@ const EmptyState = ({ handleUpload }: { handleUpload: () => void }) => {
   return (
     <>
       <div className="bg-white container border rounded-xl flex flex-col items-center justify-center py-20 text-center">
-        <Image alt="search" width={300} height={300} objectFit="contain" src={"/people-search.png"} />
+        <Image alt="search" width={200} height={200} objectFit="contain" src={"/people-search.png"} />
         <h4 className="font-bold text-3xl">Start building your team</h4>
         <p className="text-gray-700 text-base">Add your first team member or import your entire team.</p>
         <div className="p-4 flex items-center justify-center space-x-2">
