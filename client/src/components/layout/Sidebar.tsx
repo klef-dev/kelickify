@@ -8,9 +8,11 @@ import {
   CalendarDays,
   FileSpreadsheet,
   MoreHorizontal,
+  BellIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { EmptyWallet } from "iconsax-react";
 
 const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/" },
@@ -97,7 +99,24 @@ export function Sidebar() {
         ))}
       </nav>
 
-      <div className="border-t p-4">
+      <div className="p-4 text-gray-700 space-y-2 border-t">
+        <div className="flex space-x-2">
+          <EmptyWallet className="text-gray-700" color="currentColor" size={18} />
+          <p>Free Plan</p>
+        </div>
+        <div className="space-y-2">
+          <p className="text-sm">1/10 Employees</p>
+          <div className="w-full bg-gray-100 h-1 rounded-full">
+            <div className="w-1/4 bg-primary h-full rounded-full" />
+          </div>
+        </div>
+      </div>
+
+      <div className="border-t p-4 space-y-4">
+        <div className="flex space-x-2">
+          <BellIcon className="text-gray-700" color="currentColor" size={20} />
+          <p>Notification</p>
+        </div>
         <div className="flex items-center">
           <div className="w-8 h-8 bg-gray-200 rounded-full mr-3"></div>
           <div className="flex-1">
