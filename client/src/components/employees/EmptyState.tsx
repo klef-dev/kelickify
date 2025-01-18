@@ -4,7 +4,7 @@ import { Button } from "../ui/button";
 import { UploadIcon, UserPlus } from "lucide-react";
 import { UploadModal } from "./UploadModal";
 
-const EmptyState = () => {
+const EmptyState = ({ handleUpload }: { handleUpload: () => void }) => {
   const [uploadModalOpen, setUploadModalOpen] = React.useState(false);
   return (
     <>
@@ -23,7 +23,7 @@ const EmptyState = () => {
           </Button>
         </div>
       </div>
-      <UploadModal open={uploadModalOpen} onClose={() => setUploadModalOpen(false)} />
+      <UploadModal handleUpload={handleUpload} open={uploadModalOpen} onClose={() => setUploadModalOpen(false)} />
     </>
   );
 };

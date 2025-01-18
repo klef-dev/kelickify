@@ -3,14 +3,16 @@ import { Button } from "@/components/ui/button";
 import { DownloadIcon } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import Image from "next/image";
 
 interface UploadModalProps {
   open: boolean;
   onClose: () => void;
+  handleUpload?: () => void;
 }
 
-export function UploadModal({ open, onClose }: UploadModalProps) {
+export function UploadModal({ open, onClose, handleUpload }: UploadModalProps) {
   const [dragActive, setDragActive] = useState(false);
   const { toast } = useToast();
 
@@ -39,25 +41,27 @@ export function UploadModal({ open, onClose }: UploadModalProps) {
   };
 
   const handleFiles = (files: File[]) => {
-    const validFiles = files.filter(
-      (file) =>
-        file.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" || file.type === "text/csv",
-    );
+    // const validFiles = files.filter(
+    //   (file) =>
+    //     file.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" || file.type === "text/csv",
+    // );
 
-    if (validFiles.length === 0) {
-      toast({
-        title: "Invalid file type",
-        description: "Please upload only XLS or CSV files",
-        variant: "destructive",
-      });
-      return;
-    }
+    // if (validFiles.length === 0) {
+    //   toast({
+    //     title: "Invalid file type",
+    //     description: "Please upload only XLS or CSV files",
+    //     variant: "destructive",
+    //   });
+    //   return;
+    // }
 
     // Handle the valid files here
+
     toast({
       title: "Files uploaded",
-      description: `Successfully uploaded ${validFiles.length} file(s)`,
+      // description: `Successfully uploaded ${validFiles.length} file(s)`,
     });
+    handleUpload?.();
     onClose();
   };
 
