@@ -9,10 +9,12 @@ import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import Confetti from "react-confetti";
 import { Button } from "@/components/ui/button";
 import { KelickAddUserIcon } from "@/components/icons";
+import SuccessDialog from "@/components/employees/SuccessDialog";
 
 const Index = () => {
   const [uploadModalOpen, setUploadModalOpen] = useState(false);
   const [status, setStatus] = React.useState<"idle" | "loading" | "done">("idle");
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const update = () => {
     setStatus("loading");
@@ -22,6 +24,7 @@ const Index = () => {
     if (status === "loading") {
       setTimeout(() => {
         setStatus("done");
+        setIsDialogOpen(true);
       }, 5000);
     }
   }, [status]);
@@ -58,8 +61,8 @@ const Index = () => {
             <>
               <EmployeeStats />
               <EmployeeTable />
-              <Confetti width={window.innerWidth} height={window.innerHeight} />
-              {/* <ConfettiExplosion force={0.8} duration={3000} particleCount={250} width={1600} /> */}
+              {isDialogOpen && <Confetti />}
+              <SuccessDialog isDialogOpen={isDialogOpen} setIsDialogOpen={() => setIsDialogOpen(false)} />
             </>
           )}
         </div>
