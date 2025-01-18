@@ -4,34 +4,34 @@ import { cn } from "@/lib/utils";
 export function EmployeeStats() {
   return (
     <div className="w-full flex  space-x-5 items-stretch">
-      <Card className={"p-5 w-1/4 space-y-3 flex flex-col justify-between"}>
+      <Card className={"p-5 w-1/4 space-y-3 flex flex-col justify-between rounded-xl"}>
         <div className="flex items-center justify-between">
           <div>
             <h3 className="text-sm font-medium text-gray-500">Nationality</h3>
             <p className="text-3xl font-semibold">25</p>
-            <p className="text-sm text-gray-500">Nationality</p>
+            <p className="text-base text-gray-700 font-semibold">Singaporeans</p>
           </div>
           <CircleChart />
         </div>
         <div className="flex items-start gap-2 flex-wrap">
           <ChartChip text="25 Singaporean" className="bg-[#02B9B0]" />
-          <ChartChip text="10 PR" className="bg-[#B774FC]" />
-          <ChartChip text="10 Foreigner" className="bg-[#B3BEBE]" />
-          <ChartChip text="6 Others" className="bg-[#FAC905]" />
+          <ChartChip text="10 PR" className="bg-[#FAC905]" />
+          <ChartChip text="10 Foreigner" className="bg-[#B774FC]" />
+          <ChartChip text="6 Others" className="bg-[#B3BEBE]" />
         </div>
       </Card>
-      <Card className={"p-5 w-1/2 flex flex-col space-y-4"}>
+      <Card className={"p-5 w-1/2 flex flex-col space-y-4 rounded-xl"}>
         <div className="mt-2 flex items-center justify-between">
           <div>
             <h3 className="text-sm font-medium text-gray-500">Employment Type</h3>
             <p className="text-3xl font-semibold">13</p>
-            <p className="text-sm text-gray-500">Full Timers</p>
+            <p className="text-base text-gray-700 font-semibold">Full Timers</p>
           </div>
         </div>
         <div className="flex items-center space-x-1">
-          {["#02B9B0", "#B774FC", "#FAC905", "#B3BEBE"].map((c, i) => (
+          {["#02B9B0", "#FAC905", "#B774FC", "#B3BEBE"].map((c, i) => (
             <div
-              className={cn("h-4 rounded-full flex-grow", {
+              className={cn("h-3 rounded-full flex-grow", {
                 "w-2/5": i <= 1,
                 "w-[10%]": i > 1,
               })}
@@ -42,25 +42,25 @@ export function EmployeeStats() {
         </div>
         <div className="flex-grow" />
         <div className="flex items-start gap-2 flex-wrap">
-          <ChartChip text="25 Singaporean" className="bg-[#02B9B0]" />
-          <ChartChip text="10 PR" className="bg-[#B774FC]" />
-          <ChartChip text="10 Foreigner" className="bg-[#B3BEBE]" />
-          <ChartChip text="6 Others" className="bg-[#FAC905]" />
+          <ChartChip text="25 Full-Timer" className="bg-[#02B9B0]" />
+          <ChartChip text="10 Part-Timer" className="bg-[#FAC905]" />
+          <ChartChip text="5 Contract" className="bg-[#B774FC]" />
+          <ChartChip text="6 Intern" className="bg-[#B3BEBE]" />
         </div>
       </Card>
-      <Card className={"p-5 w-1/4 space-y-3 flex flex-col justify-between"}>
+      <Card className={"p-5 w-1/3 space-y-3 flex flex-col justify-between rounded-xl"}>
         <div className="flex items-center justify-between">
           <div>
             <h3 className="text-sm font-medium text-gray-500">Employee Status</h3>
             <p className="text-3xl font-semibold">25</p>
-            <p className="text-sm text-gray-500">Active Employees</p>
+            <p className="text-base text-gray-700 font-semibold">Active Employees</p>
           </div>
           <Donuts />
         </div>
         <div className="flex items-start gap-2 flex-wrap">
-          <ChartChip text="25 Singaporean" className="bg-[#02B9B0]" />
-          <ChartChip text="10 PR" className="bg-[#B774FC]" />
-          <ChartChip text="10 Foreigner" className="bg-[#B3BEBE]" />
+          <ChartChip text="25 Active" className="bg-[#02B9B0]" />
+          <ChartChip text="10 Invite Sent" className="bg-[#B774FC]" />
+          <ChartChip text="6 Payroll Only" className="bg-[#B3BEBE]" />
           <ChartChip text="6 Others" className="bg-[#FAC905]" />
         </div>
       </Card>
