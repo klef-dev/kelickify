@@ -8,6 +8,7 @@ import { UploadModal } from "@/components/employees/UploadModal";
 import { UserPlus } from "lucide-react";
 import EmptyState from "@/components/employees/EmptyState";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import Confetti from "react-confetti";
 
 const Index = () => {
   const [uploadModalOpen, setUploadModalOpen] = useState(false);
@@ -28,10 +29,12 @@ const Index = () => {
   return (
     <div className="flex h-screen bg-gray-50">
       <Sidebar />
+
       <main className="flex-1 overflow-auto space-y-5 h-screen flex flex-col">
-        <header className="container flex items-center justify-between bg-white py-5">
-          <h1 className="text-2xl font-semibold">Employees</h1>
-          <div className="flex gap-3">
+        <header className=" bg-white ">
+          <div className="container flex items-center justify-between py-5">
+            <h1 className="text-2xl font-semibold">Employees</h1>
+
             <Button onClick={() => setUploadModalOpen(true)}>
               <UserPlus className="h-4 w-4 mr-2" />
               Add Employee
@@ -45,7 +48,7 @@ const Index = () => {
                 src="https://lottie.host/880c8f3e-3541-4c31-9699-629992fd9454/PAEO9KIjQn.lottie"
                 loop
                 autoplay
-                className="scale-[.90]"
+                style={{ width: 150, height: 150 }}
               />
             </div>
           )}
@@ -54,6 +57,8 @@ const Index = () => {
             <>
               <EmployeeStats />
               <EmployeeTable />
+              <Confetti width={window.innerWidth} height={window.innerHeight} />
+              {/* <ConfettiExplosion force={0.8} duration={3000} particleCount={250} width={1600} /> */}
             </>
           )}
         </div>

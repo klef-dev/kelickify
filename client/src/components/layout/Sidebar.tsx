@@ -40,7 +40,7 @@ export function Sidebar() {
   const [expanded, setExpanded] = useState<string | null>(null);
 
   return (
-    <div className="w-64 h-screen bg-white border-r flex flex-col">
+    <div className="w-52 h-screen bg-white border-r flex flex-col">
       <div className="p-4">
         <Image
           src={"/kelick-logo.svg"}
@@ -52,7 +52,7 @@ export function Sidebar() {
         />
       </div>
 
-      <nav className="flex-1 px-2">
+      <nav className="flex-1 px-2 space-y-5">
         {menuItems.map((item, idx) => (
           <div key={idx}>
             {item.isHeader ? (
@@ -62,7 +62,9 @@ export function Sidebar() {
                 href={item.href}
                 className={cn(
                   "flex items-center px-4 py-2 mt-1 text-sm font-medium rounded-md",
-                  item.active ? "bg-gray-100 text-gray-900" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900",
+                  item.active
+                    ? "bg-gray-100 text-gray-900 border"
+                    : "text-gray-500 hover:bg-gray-50 hover:text-gray-900",
                 )}
                 onClick={() => {
                   if (item.hasSubmenu) {
@@ -70,7 +72,7 @@ export function Sidebar() {
                   }
                 }}
               >
-                {item.icon && <item.icon className="h-5 w-5 mr-3" />}
+                {item.icon && <item.icon className="h-5 w-5 mr-4" />}
                 <span className={item.hasSubmenu ? "font-semibold text-gray-500" : ""}>{item.label}</span>
                 {item.hasSubmenu && (
                   <ChevronDown
@@ -89,7 +91,7 @@ export function Sidebar() {
                     className="flex items-center px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-md"
                     key={subIdx}
                   >
-                    {subItem.icon && <subItem.icon className="h-5 w-5 mr-3" />}
+                    {subItem.icon && <subItem.icon className="h-5 w-5 mr-4" />}
                     <span className="">{subItem.label}</span>
                   </div>
                 ))}
