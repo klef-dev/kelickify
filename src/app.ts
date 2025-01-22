@@ -2,7 +2,7 @@ import configureOpenAPI from "@/lib/configure-open-api";
 import createApp from "@/lib/create-app";
 import cpf from "@/routes/cpf/cpf.index";
 import employees from "@/routes/employees/employees.index";
-import index from "@/routes/index.route";
+import index from "@/routes/index.routes";
 
 const app = createApp();
 

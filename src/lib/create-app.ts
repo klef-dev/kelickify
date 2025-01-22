@@ -6,12 +6,7 @@ import { pinoLogger } from "@/middlewares/pino-logger";
 
 import type { AppBindings, AppOpenAPI } from "./types";
 
-export function createRouter() {
-  return new OpenAPIHono<AppBindings>({
-    strict: false,
-    defaultHook,
-  });
-}
+export const createRouter = () => new OpenAPIHono<AppBindings>({ defaultHook });
 
 export default function createApp() {
   const app = createRouter();

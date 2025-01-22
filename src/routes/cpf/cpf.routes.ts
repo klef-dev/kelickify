@@ -2,6 +2,7 @@ import { createRoute, z } from "@hono/zod-openapi";
 import * as HttpStatusCodes from "stoker/http-status-codes";
 import { jsonContent, jsonContentRequired } from "stoker/openapi/helpers";
 import { createErrorSchema, createMessageObjectSchema } from "stoker/openapi/schemas";
+import getParamsSchema from "stoker/openapi/schemas/get-params-schema";
 
 import { cpfCalculationResultSchema, cpfCalculationSchema, selectCPFContributionsSchema } from "@/schemas/cpf";
 
@@ -29,9 +30,7 @@ export const history = createRoute({
   path: "/cpf/history/{employeeId}",
   method: "get",
   request: {
-    params: z.object({
-      employeeId: z.string().uuid(),
-    }),
+    params: getParamsSchema({ name: "employeeId", validator: "uuid" }),
   },
   tags,
   responses: {
